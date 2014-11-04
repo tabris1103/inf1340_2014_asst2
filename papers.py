@@ -29,10 +29,15 @@ def decide(input_file, watchlist_file, countries_file):
     """
 
     entry_decision_list = []
-    #Check the existence of the file
 
+    #Check the existence of the file
+    entry_list = parse_json_to_python_list(input_file)
+    watch_list = parse_json_to_python_list(watchlist_file)
+    country_list = parse_json_to_python_list(countries_file)
 
     # needs to have for loop to iterate the list
+    for entry_record in entry_list:
+        entry_decision_for_current_record = []
         #For each entry information, store them into the corresponding variables
 
 
