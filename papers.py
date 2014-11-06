@@ -108,7 +108,13 @@ def valid_visa_code_format(visa_code):
     :param visa_code: Visa code to be checked
     :return: Boolean True if Visa format is valid, False otherwise
     """
+    visa_format = re.compile('.{5}-.{5}')
 
+    if visa_format.match(visa_code) and re.match('^[a-zA-Z0-9-]+$', visa_code) is not None\
+            and len(visa_code.replace('-', '')) == 5:
+        return True
+    else:
+        return False
 def check_visa_expiry(visa_date):
     """
     Checks whether the given Visa is expired or not (Visa must be less than 2 years old)
