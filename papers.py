@@ -38,7 +38,19 @@ def decide(input_file, watchlist_file, countries_file):
     # needs to have for loop to iterate the list
     for entry_record in entry_list:
         entry_decision_for_current_record = []
+
         #For each entry information, store them into the corresponding variables
+        first_name = entry_record['first_name']
+        last_name = entry_record['last_name']
+        birth_date = entry_record['birth_date']
+        passport = entry_record['passport']
+        home_city = entry_record['home']['city']
+        home_region = entry_record['home']['region']
+        home_country = entry_record['home']['country']
+        from_city = entry_record['from']['city']
+        from_region = entry_record['from']['region']
+        from_country = entry_record['from']['country']
+        entry_reason = entry_record['entry_reason']
 
 
         # via info variables - set the via information availability to false
