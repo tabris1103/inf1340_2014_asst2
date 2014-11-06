@@ -145,7 +145,11 @@ def has_medical_advisory(country_code, country_info_list):
     :param country_info_list: List that contains medical advisory information for each country
     :return: Boolean True if country is under medical advisory, False otherwise.
     """
-
+    medical_advisory = country_info_list[country_code]['medical_advisory']
+    if len(medical_advisory) > 0:
+        return True
+    else:
+        return False
 
 
 def parse_json_to_python_list (json_file):
