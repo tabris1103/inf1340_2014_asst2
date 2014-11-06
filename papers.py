@@ -158,6 +158,10 @@ def parse_json_to_python_list (json_file):
     :param json_file: JSON file to be parsed
     :return:List, List file generated from parsed JSON file
     """
+    json_file_reader = open(json_file, "r")
+    file_contents = json_file_reader.read()
+    parsed_list = json.loads(file_contents)
+    
     return parsed_list
 
 def valid_basic_info_availability(entry_record):
