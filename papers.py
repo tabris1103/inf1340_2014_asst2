@@ -181,7 +181,19 @@ def is_visa_required(country_code, required_visa_type, country_list):
     :param country_list: list of country with Visa requirement information
     :return: True if transit visa is required. False otherwise
     """
-
+    if country_code == 'KAN':
+        return False
+    if required_visa_type == 'transit':
+        if country_list[country_code]['transit_visa_required'] == '1':
+            return True
+        else:
+            return False
+    else:
+        if country_list[country_code]['visitor_visa_required'] == '1':
+            return True
+        else:
+            return False
+        
 def is_in_watchlist(first_name, last_name, passport_number, watchlist):
     """
     Check whether the provided personal information is in the provided watchlist
@@ -191,3 +203,15 @@ def is_in_watchlist(first_name, last_name, passport_number, watchlist):
     :param watchlist: watchlist to be checked against
     :return: True if match was found in the watchlist, False otherwise
     """
+    in_watchlist = False
+    for watchlist_record in watchlist:
+        first_name_in_watchlist_record = watchlist_record['first_name']
+        last_name_in_watchlist_record = watchlist_record['last_name']
+        passport_num_in_watchlist_record = watchlist_record['passport']
+
+        if ((first_name.upper() == first_name_in_watchlist_record.upper() and
+            last_name.upper() == last_name_in_watchlist_record.upper())
+                or passport_number == passport_num_in_watchlist_record):
+            in_watchlist = True
+
+    return in_watchlist
