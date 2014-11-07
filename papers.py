@@ -55,12 +55,30 @@ def decide(input_file, watchlist_file, countries_file):
 
         # via info variables - set the via information availability to false
         # if there's no via key in the entry record
+        via_info_availability = True
+        try:
+            via_city = entry_record['via']['city']
+            via_region = entry_record['via']['region']
+            via_country = entry_record['via']['country']
+        except KeyError:
+            via_info_availability = False
 
-
-        # Visa info variables - set the Viaa information availability to false
+        # Visa info variables - set the Visa information availability to false
         # if there's no Visa key in the entry record
+        visa_info_availability = True
+        try:
+            visa_date = entry_record['visa']['code']
+            visa_code = entry_record['visa']['date']
+        except KeyError:
+            visa_info_availability = False
 
         # Check the input format validity for each field in the entry record
+        if valid_passport_format(passport) is False:
+            information_validity_decision = 'Reject'
+        elif valid_date_format(birth_date) is False:
+            information_validity_decision = 'Reject'
+        else:
+            information_validity_decision = 'Accept'
 
         # Check whether the current entry record is in the watchlist, then decide to accept or send to secondary
 
@@ -193,7 +211,7 @@ def is_visa_required(country_code, required_visa_type, country_list):
             return True
         else:
             return False
-        
+
 def is_in_watchlist(first_name, last_name, passport_number, watchlist):
     """
     Check whether the provided personal information is in the provided watchlist
