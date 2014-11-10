@@ -141,10 +141,9 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    passport_format = re.compile('.{5}-.{5}-.{5}-.{5}-.{5}')
+    passport_format = re.compile('^\w{5}-\w{5}-\w{5}-\w{5}-\w{5}$')
 
-    if passport_format.match(passport_number) and re.match('^[a-zA-Z0-9-]+$', passport_number) is not None\
-            and len(passport_number.replace('-', '')) == 25:
+    if passport_format.match(passport_number):
         return True
     else:
         return False
@@ -169,10 +168,9 @@ def valid_visa_code_format(visa_code):
     :param visa_code: Visa code to be checked
     :return: Boolean True if Visa format is valid, False otherwise
     """
-    visa_format = re.compile('.{5}-.{5}')
+    visa_format = re.compile('^\w{5}-\w{5}$')
 
-    if visa_format.match(visa_code) and re.match('^[a-zA-Z0-9-]+$', visa_code) is not None\
-            and len(visa_code.replace('-', '')) == 5:
+    if visa_format.match(visa_code):
         return True
     else:
         return False
