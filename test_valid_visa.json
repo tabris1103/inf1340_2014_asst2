@@ -1,46 +1,44 @@
 [
     {
-        "Passport":	"TY7YU-97TYP-ERT12-456H7-TNM8P",
-        "First_Name":	"Ralph",
-        "Last_Name":	"Hogarth",
-        "birth_date":	"1980-12-08",
-        "Home":   {
-                "City":		"Chesterfield",
-		        "Region":	"Shremp",
-		        "Country":	"BRD",
-		        },
-        "From":	{
-                "City":		"Rodent",
-		        "Region":	"Weasel",
-		        "Country":	"BRD",
-		        },
-        "Entry Reason":	"Visit"
-        VISA:	{
-                    "Date":		"2013-09-01",
-		            "Code":		"TYN98-87N4R"
-		        }
+        "passport": "TY7YU-97TYP-ERT12-456H7-TNM8P",
+        "first_name": "Ralph",
+        "last_name": "Hogarth",
+        "birth_date": "1980-12-08",
+        "home": {
+            "city": "Chesterfield",
+            "region": "Shremp",
+            "country": "BRD"
+        },
+        "from": {
+            "city": "Rodent",
+            "region": "Weasel",
+            "country": "BRD"
+        },
+        "entry_reason": "Visit",
+        "visa": {
+            "date": "2013-09-01",
+            "code": "TYN98-87N4R"
+        }
     },
     {
-        "Passport":	"MBR23-RV5HM-148HN-95P27-FG4NH",
-        "First_Name":	"Karl",
-        "Last_Name":	"Stevens",
-        "birth_date":	"1967-08-16",
-        "Home":   {
-                    "City":		"Thompsonville",
-		            "Region":		"Smooth",
-		            "Country":	"III",
-		        },
-        "From":	{
-                    "City":		"Thompsonville",
-		            "Region":		"Smooth",
-		            "Country":	"III",
-                },
-        "Entry Reason":	"Visit",
-        "VISA": {
-                    "Date":		"2010-03-15",
-		            "Code":		"TT8MM-42Y98"
-		        }
-
+        "passport": "MBR23-RV5HM-148HN-95P27-FG4NH",
+        "first_name": "Karl",
+        "last_name": "Stevens",
+        "birth_date": "1967-08-16",
+        "home": {
+            "city": "Thompsonville",
+            "region": "Smooth",
+            "country": "III"
+        },
+        "from": {
+            "city": "Thompsonville",
+            "region": "Smooth",
+            "country": "III"
+        },
+        "entry_reason": "Visit",
+        "visa": {
+            "date": "2010-03-15",
+            "code": "TT8MM-42Y98"
+        }
     }
 ]
-
