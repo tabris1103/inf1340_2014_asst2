@@ -59,27 +59,6 @@
         "entry_reason": "Visit"
     },
     {
-        "passport": "TY7YU-97TYP-ERT12-456H7-TNM8P",
-        "first_name": "Ralph",
-        "last_name": "Hogarth",
-        "birth_date": "1980-12-08",
-        "home": {
-            "city": "Chesterfield",
-            "region": "Shremp",
-            "country": "BRD"
-        },
-        "from": {
-            "city": "Rodent",
-            "region": "Weasel",
-            "country": "BRD"
-        },
-        "entry_reason": "Transit",
-        "visa": {
-            "date": "2013-09-01",
-            "code": "TYN98-87N4R"
-        }
-    },
-    {
         "passport": "MBR23-RV5HM-148HN-95P27-FG4NH",
         "first_name": "Karl",
         "last_name": "Stevens",
@@ -98,6 +77,27 @@
         "visa": {
             "date": "2014-03-15",
             "code": "TT8MM-!23d@"
+        }
+    },
+    {
+        "passport": "TY7YU-97TYP-ERT12-456H7-TNM8P",
+        "first_name": "Ralph",
+        "last_name": "Hogarth",
+        "birth_date": "1980-12-08",
+        "home": {
+            "city": "Chesterfield",
+            "region": "Shremp",
+            "country": "BRD"
+        },
+        "from": {
+            "city": "Rodent",
+            "region": "Weasel",
+            "country": "BRD"
+        },
+        "entry_reason": "Transit",
+        "visa": {
+            "date": "2013-09-01",
+            "code": "TYN98-87N4R"
         }
     },
     {

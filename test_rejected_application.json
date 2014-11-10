@@ -5,9 +5,9 @@
         "last_name":	"Smith",
         "birth_date":	"1984-09-12",
         "home": {
-                    "City":		"Tronto",
-		            "Region":	"ON",
-		            "Country":	"KAN"
+                    "city":		"Tronto",
+		            "region":	"ON",
+		            "country":	"KAN"
 		        },
         "from":	{
                     "city":		"Fromton",
