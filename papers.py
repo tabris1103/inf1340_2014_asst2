@@ -117,7 +117,20 @@ def decide(input_file, watchlist_file, countries_file):
             return_entry_decision = ''
 
         # Compile each decision, then make final decision by the order of priority
+        entry_decision_for_current_record.append(return_entry_decision)
+        entry_decision_for_current_record.append(watchlist_decision)
+        entry_decision_for_current_record.append(visa_decision)
+        entry_decision_for_current_record.append(medical_advisory_decision)
+        entry_decision_for_current_record.append(information_validity_decision)
 
+        if 'Quarantine' in entry_decision_for_current_record:
+            entry_decision_list.append('Quarantine')
+        elif 'Reject' in entry_decision_for_current_record:
+            entry_decision_list.append('Reject')
+        elif 'Secondary' in entry_decision_for_current_record:
+            entry_decision_list.append('Secondary')
+        elif 'Accept' in entry_decision_for_current_record:
+            entry_decision_list.append('Accept')
 
     return entry_decision_list
 
