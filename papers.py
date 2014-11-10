@@ -143,7 +143,6 @@ def decide(input_file, watchlist_file, countries_file):
     return entry_decision_list
 
 
-
 def valid_passport_format(passport_number):
     """
     Checks whether a passports number is five sets of five alpha-number characters separated by dashes
@@ -183,6 +182,8 @@ def valid_visa_code_format(visa_code):
         return True
     else:
         return False
+
+
 def check_visa_expiry(visa_date):
     """
     Checks whether the given Visa is expired or not (Visa must be less than 2 years old)
