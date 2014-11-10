@@ -55,12 +55,30 @@ def decide(input_file, watchlist_file, countries_file):
 
         # via info variables - set the via information availability to false
         # if there's no via key in the entry record
+        via_info_availability = True
+        try:
+            via_city = entry_record['via']['city']
+            via_region = entry_record['via']['region']
+            via_country = entry_record['via']['country']
+        except KeyError:
+            via_info_availability = False
 
-
-        # Visa info variables - set the Viaa information availability to false
+        # Visa info variables - set the Visa information availability to false
         # if there's no Visa key in the entry record
+        visa_info_availability = True
+        try:
+            visa_date = entry_record['visa']['code']
+            visa_code = entry_record['visa']['date']
+        except KeyError:
+            visa_info_availability = False
 
         # Check the input format validity for each field in the entry record
+        if valid_passport_format(passport) is False:
+            information_validity_decision = 'Reject'
+        elif valid_date_format(birth_date) is False:
+            information_validity_decision = 'Reject'
+        else:
+            information_validity_decision = 'Accept'
 
         # Check whether the current entry record is in the watchlist, then decide to accept or send to secondary
         if is_in_watchlist(first_name, last_name, passport, watch_list):
@@ -192,6 +210,18 @@ def is_visa_required(country_code, required_visa_type, country_list):
     :param country_list: list of country with Visa requirement information
     :return: True if transit visa is required. False otherwise
     """
+    if country_code == 'KAN':
+        return False
+    if required_visa_type == 'transit':
+        if country_list[country_code]['transit_visa_required'] == '1':
+            return True
+        else:
+            return False
+    else:
+        if country_list[country_code]['visitor_visa_required'] == '1':
+            return True
+        else:
+            return False
 
 def is_in_watchlist(first_name, last_name, passport_number, watchlist):
     """
@@ -202,3 +232,15 @@ def is_in_watchlist(first_name, last_name, passport_number, watchlist):
     :param watchlist: watchlist to be checked against
     :return: True if match was found in the watchlist, False otherwise
     """
+    in_watchlist = False
+    for watchlist_record in watchlist:
+        first_name_in_watchlist_record = watchlist_record['first_name']
+        last_name_in_watchlist_record = watchlist_record['last_name']
+        passport_num_in_watchlist_record = watchlist_record['passport']
+
+        if ((first_name.upper() == first_name_in_watchlist_record.upper() and
+            last_name.upper() == last_name_in_watchlist_record.upper())
+                or passport_number == passport_num_in_watchlist_record):
+            in_watchlist = True
+
+    return in_watchlist
