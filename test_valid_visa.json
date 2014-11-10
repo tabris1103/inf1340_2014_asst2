@@ -1,42 +1,42 @@
 [
     {
-        "Passport":	"TY7YU-97TYP-ERT12-456H7-TNM8P",
-        "First_Name":	"Ralph",
-        "Last_Name":	"Hogarth",
+        "passport":	"TY7YU-97TYP-ERT12-456H7-TNM8P",
+        "first_name":	"RALPH",
+        "last_name":	"HOGARTH",
         "birth_date":	"1980-12-08",
-        "Home":   {
-                "City":		"Chesterfield",
-		        "Region":	"Shremp",
-		        "Country":	"BRD",
+        "home":   {
+                "city":		"Chesterfield",
+		        "region":	"Shremp",
+		        "country":	"BRD"
 		        },
-        "From":	{
-                "City":		"Rodent",
-		        "Region":	"Weasel",
-		        "Country":	"BRD",
+        "from":	{
+                "city":		"Rodent",
+		        "region":	"Weasel",
+		        "country":	"BRD"
 		        },
-        "Entry Reason":	"Visit"
-        VISA:	{
-                    "Date":		"2013-09-01",
-		            "Code":		"TYN98-87N4R"
+        "entry_reason":	"visit",
+        "visa":	{
+                    "date":		"2013-09-01",
+		            "code":		"TYN98-87N4R"
 		        }
     },
     {
-        "Passport":	"MBR23-RV5HM-148HN-95P27-FG4NH",
-        "First_Name":	"Karl",
-        "Last_Name":	"Stevens",
+        "passport":	"MBR23-RV5HM-148HN-95P27-FG4NH",
+        "first_name":	"KARL",
+        "last_name":	"STEVENS",
         "birth_date":	"1967-08-16",
-        "Home":   {
-                    "City":		"Thompsonville",
-		            "Region":		"Smooth",
-		            "Country":	"III",
+        "home":   {
+                    "city":		"Thompsonville",
+		            "region":		"Smooth",
+		            "country":	"III"
 		        },
-        "From":	{
-                    "City":		"Thompsonville",
-		            "Region":		"Smooth",
-		            "Country":	"III",
+        "from":	{
+                    "city":		"Thompsonville",
+		            "region":		"Smooth",
+		            "country":	"III"
                 },
-        "Entry Reason":	"Visit",
-        "VISA": {
+        "entry_reason":	"visit",
+        "visa": {
                     "Date":		"2010-03-15",
 		            "Code":		"TT8MM-42Y98"
 		        }

@@ -1,61 +1,61 @@
 [
     {
 
-        "passport":	"RGN78-B12YM-HPLKG-16H89-TT8MM"
-        "first_name":	"Peter"
-        "last_name":	"Frampton"
-        "birth_date":		"1950-06-15"
+        "passport":	"RGN78-B12YM-HPLKG-16H89-TT8MM",
+        "first_name":	"Peter",
+        "last_name":	"Frampton",
+        "birth_date":		"1950-06-15",
         "home": {
-                "city":		"Framptonville"
-		        "region":		"NB"
+                "city":		"Framptonville",
+		        "region":	"NB",
 		        "country":	"KAN"
 	    },
         "from":   {
-                "city":		"Brohmpt"
-		        "region":		"Foliage"
+                "city":		"Brohmpt",
+		        "region":	"Foliage",
 		        "country":	"ELE"
 		        },
-        entry reason:	Returning
+        "entry reason":	"returning"
     },
     {
-        "Passport":	"TB45Y-16YU8-TGUJQ-WC47J-DS356"
-        "First_Name":	"Honry"
-        "Last_Name":	"Grent"
-        "birth_date":		"1976-10-25"
-        "Home":	{
-                "City":		"Prauge"
-		        "Region":		"Nykse"
-		        "Country":	"DSK"
+        "passport":	"TB45Y-16YU8-TGUJQ-WC47J-DS356",
+        "first_name":	"Honry",
+        "last_name":	"Grent",
+        "birth_date":		"1976-10-25",
+        "home":	{
+                "city":		"Prauge",
+		        "region":	"Nykse",
+		        "country":	"DSK"
 		        },
-        "From":	{
-                "City":		"Dowel"
-		        "Region":		"Wood"
-		        "Country":	"DSK"
+        "from":	{
+                "city":		"Dowel",
+		        "region":	"Wood",
+		        "country":	"DSK"
 		        },
-        "Via":	{
-                "City":		"St. Kirsche"
-		        "Region":		"Bollscht"
-		        "Country":	"LUG"
+        "via":	{
+                "city":		"St. Kirsche",
+		        "region":	"Bollscht",
+		        "country":	"LUG"
         },
-        "entry_reason":	visit
+        "entry_reason":	"visit"
 
     },
     {
-        "Passport":	"YN68N-14BB8-MVGTR-RG92F-MC43U",
-        "First_Name":	"Francis",
-        "Last_Name":	"Moore",
+        "passport":	"YN68N-14BB8-MVGTR-RG92F-MC43U",
+        "first_name":	"Francis",
+        "last_name":	"Moore",
         "birth_date":	"1974-10-19",
-        "Home":	{
-        "City":		"New Fistkickton",
-		"Region":	"Grolsch",
-		"Country":	"DSK",
+        "home":	{
+        "city":		"New Fistkickton",
+		"region":	"Grolsch",
+		"country":	"DSK"
 		},
-        "From":	{
-        "City":		"Dowel",
-		"Region":	"Wood",
-		"Country":	"DSK",
+        "from":	{
+        "city":		"Dowel",
+		"region":	"Wood",
+		"country":	"DSK"
 		},
-        "Entry Reason":	"Visit"
+        "entry_reason":	"visit"
     }
 
  ]
