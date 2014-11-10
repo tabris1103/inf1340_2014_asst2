@@ -63,9 +63,20 @@ def decide(input_file, watchlist_file, countries_file):
         # Check the input format validity for each field in the entry record
 
         # Check whether the current entry record is in the watchlist, then decide to accept or send to secondary
+        if is_in_watchlist(first_name, last_name, passport, watch_list):
+            watchlist_decision = 'Secondary'
+        else:
+            watchlist_decision = 'Accept'
 
         # Check whether the current entry record is coming from or via country that has medical advisory
         # then decide to accept or send to quarantine
+        if via_info_availability:
+            check_medical_advisory = has_medical_advisory(via_country, country_list) or \
+                has_medical_advisory(from_country, country_list)
+        else:
+            check_medical_advisory = has_medical_advisory(from_country, country_list)
+
+        medical_advisory_decision = 'Quarantine' if check_medical_advisory else 'Accept'
 
         # Check whether visa is required. If required, check whether entry record has correct visa information
 
@@ -161,7 +172,7 @@ def parse_json_to_python_list (json_file):
     json_file_reader = open(json_file, "r")
     file_contents = json_file_reader.read()
     parsed_list = json.loads(file_contents)
-    
+
     return parsed_list
 
 def valid_basic_info_availability(entry_record):
