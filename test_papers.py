@@ -2,13 +2,7 @@
 
 """ Module to test papers.py  """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
-
-__copyright__ = "2014 Susan Sim"
-__license__ = "MIT License"
-
-__status__ = "Prototype"
+__author__ = 'Shawn Jung & Jordan Rae'
 
 # imports one per line
 import pytest
@@ -21,6 +15,24 @@ def test_basic():
     assert decide("test_quarantine.json", "watchlist.json", "countries.json") == ["Quarantine"]
 
 
+# Test case to see whether the program correctly catches the incompleteness of the required data
+def test_required_info_availability():
+
+
+# Test case to see whether the traveller's visa check functionality is performing correctly
+def test_valid_visa():
+
+
+# Testing Medical Advisory Check
+def test_medical_advisory():
+
+  
+# Testing Secondary Processing Check
+def test_secondary():
+    assert decide("test_secondary.json", "watchlist.json", "countries.json") == ['Secondary', 'Secondary', 'Reject',
+                                                                                 'Quarantine']
+
+
 def test_files():
     with pytest.raises(FileNotFoundError):
         decide("test_returning_citizen.json", "", "countries.json")
@@ -31,5 +43,4 @@ def test_files():
     with pytest.raises(FileNotFoundError):
         decide("", "test_watchlist.json", "countries.json")
 
-# add functions for other tests
 
