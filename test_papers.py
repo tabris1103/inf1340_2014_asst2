@@ -17,17 +17,27 @@ def test_basic():
 
 # Test case to see whether the program correctly catches the incompleteness of the required data
 def test_required_info_availability():
+    assert decide("test_rejected_application.json", "watchlist.json", "countries.json") == ['Accept', 'Reject',
+                                                                                            'Reject', 'Reject',
+                                                                                            'Reject', 'Reject',
+                                                                                            'Reject', 'Reject',
+                                                                                            'Reject', 'Reject',
+                                                                                            'Reject', 'Reject']
 
 
 # Test case to see whether the traveller's visa check functionality is performing correctly
 def test_valid_visa():
+     assert decide("test_valid_visa.json", "watchlist.json", "countries.json") == ['Accept', 'Reject', 'Reject',
+                                                                                  'Reject', 'Accept', 'Reject',
+                                                                                  'Reject', 'Reject']
 
 
 # Testing Medical Advisory Check
 def test_medical_advisory():
+     assert decide("test_medical_advisory.json", "watchlist.json", "countries.json") == ['Quarantine', 'Quarantine',
+                                                                                        'Quarantine']
 
-  
-# Testing Secondary Processing Check
+  # Testing Secondary Processing Check
 def test_secondary():
     assert decide("test_secondary.json", "watchlist.json", "countries.json") == ['Secondary', 'Secondary', 'Reject',
                                                                                  'Quarantine']
