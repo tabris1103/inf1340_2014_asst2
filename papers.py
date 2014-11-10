@@ -52,7 +52,6 @@ def decide(input_file, watchlist_file, countries_file):
         from_country = entry_record['from']['country']
         entry_reason = entry_record['entry_reason']
 
-
         # via info variables - set the via information availability to false
         # if there's no via key in the entry record
         via_info_availability = True
@@ -72,10 +71,14 @@ def decide(input_file, watchlist_file, countries_file):
         except KeyError:
             visa_info_availability = False
 
-        # Check the input format validity for each field in the entry record
+        # Check the date input format validity for each date field in the entry record
         if valid_passport_format(passport) is False:
             information_validity_decision = 'Reject'
         elif valid_date_format(birth_date) is False:
+            information_validity_decision = 'Reject'
+        elif visa_info_availability is True and valid_date_format(visa_date) is False:
+            information_validity_decision = 'Reject'
+        elif visa_info_availability is True and valid_visa_code_format(visa_code) is False:
             information_validity_decision = 'Reject'
         else:
             information_validity_decision = 'Accept'
@@ -97,8 +100,24 @@ def decide(input_file, watchlist_file, countries_file):
         medical_advisory_decision = 'Quarantine' if check_medical_advisory else 'Accept'
 
         # Check whether visa is required. If required, check whether entry record has correct visa information
+        if is_visa_required(home_country, entry_reason, country_list):
+            if visa_info_availability:
+                if valid_date_format(visa_date) and valid_visa_code_format(visa_code) and check_visa_expiry(visa_date):
+                    visa_decision = 'Accept'
+                else:
+                    visa_decision = 'Reject'
+            else:
+                visa_decision = 'Reject'
+        else:
+            visa_decision = 'Accept'
+
+        if entry_reason == 'returning' and home_country == 'KAN':
+            return_entry_decision = 'Accept'
+        else:
+            return_entry_decision = ''
 
         # Compile each decision, then make final decision by the order of priority
+
 
     return entry_decision_list
 
