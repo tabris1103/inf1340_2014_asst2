@@ -1,46 +1,44 @@
 [
     {
-        "passport":	"TY7YU-97TYP-ERT12-456H7-TNM8P",
-        "first_name":	"RALPH",
-        "last_name":	"HOGARTH",
-        "birth_date":	"1980-12-08",
-        "home":   {
-                "city":		"Chesterfield",
-		        "region":	"Shremp",
-		        "country":	"BRD"
-		        },
-        "from":	{
-                "city":		"Rodent",
-		        "region":	"Weasel",
-		        "country":	"BRD"
-		        },
-        "entry_reason":	"visit",
-        "visa":	{
-                    "date":		"2013-09-01",
-		            "code":		"TYN98-87N4R"
-		        }
+        "passport": "TY7YU-97TYP-ERT12-456H7-TNM8P",
+        "first_name": "Ralph",
+        "last_name": "Hogarth",
+        "birth_date": "1980-12-08",
+        "home": {
+            "city": "Chesterfield",
+            "region": "Shremp",
+            "country": "BRD"
+        },
+        "from": {
+            "city": "Rodent",
+            "region": "Weasel",
+            "country": "BRD"
+        },
+        "entry_reason": "Visit",
+        "visa": {
+            "date": "2013-09-01",
+            "code": "TYN98-87N4R"
+        }
     },
     {
-        "passport":	"MBR23-RV5HM-148HN-95P27-FG4NH",
-        "first_name":	"KARL",
-        "last_name":	"STEVENS",
-        "birth_date":	"1967-08-16",
-        "home":   {
-                    "city":		"Thompsonville",
-		            "region":		"Smooth",
-		            "country":	"III"
-		        },
-        "from":	{
-                    "city":		"Thompsonville",
-		            "region":		"Smooth",
-		            "country":	"III"
-                },
-        "entry_reason":	"visit",
+        "passport": "MBR23-RV5HM-148HN-95P27-FG4NH",
+        "first_name": "Karl",
+        "last_name": "Stevens",
+        "birth_date": "1967-08-16",
+        "home": {
+            "city": "Thompsonville",
+            "region": "Smooth",
+            "country": "III"
+        },
+        "from": {
+            "city": "Thompsonville",
+            "region": "Smooth",
+            "country": "III"
+        },
+        "entry_reason": "Visit",
         "visa": {
-                    "Date":		"2010-03-15",
-		            "Code":		"TT8MM-42Y98"
-		        }
-
+            "date": "2010-03-15",
+            "code": "TT8MM-42Y98"
+        }
     }
 ]
-
