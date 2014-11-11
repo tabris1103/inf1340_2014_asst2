@@ -31,100 +31,17 @@ def decide(input_file, watchlist_file, countries_file):
 
     # needs to have for loop to iterate the list
     for entry_record in entry_list:
-        entry_decision_for_current_record = []
-
-        #For each entry information, store them into the corresponding variables if the variable exists.
-        try:
-            first_name = valid_basic_info_availability(entry_record['first_name'])
-            last_name = valid_basic_info_availability(entry_record['last_name'])
-            birth_date = valid_basic_info_availability(entry_record['birth_date'])
-            passport = valid_basic_info_availability(entry_record['passport'])
-            home_city = valid_basic_info_availability(entry_record['home']['city'])
-            home_region = valid_basic_info_availability(entry_record['home']['region'])
-            home_country = valid_basic_info_availability(entry_record['home']['country'])
-            from_city = valid_basic_info_availability(entry_record['from']['city'])
-            from_region = valid_basic_info_availability(entry_record['from']['region'])
-            from_country = valid_basic_info_availability(entry_record['from']['country'])
-            entry_reason = valid_basic_info_availability(entry_record['entry_reason'])
-
-            # store via variable only when via key is in the record
-            if 'via' in entry_record:
-                via_city = valid_basic_info_availability(entry_record['via']['city'])
-                via_region = valid_basic_info_availability(entry_record['via']['region'])
-                via_country = valid_basic_info_availability(entry_record['via']['country'])
-            # store visa variable only when visa key is in the record
-            if 'visa' in entry_record:
-                visa_date = valid_basic_info_availability(entry_record['visa']['date'])
-                visa_code = valid_basic_info_availability(entry_record['visa']['code'])
-        except ValueError:
-            basic_info_availability_decision = 'Reject'
-        else:
-            basic_info_availability_decision = 'Accept'
-
-        #-- Check the date input format validity for each date field in the entry record
-        if valid_passport_format(passport) is False:
-            information_validity_decision = 'Reject'
-        elif valid_date_format(birth_date) is False:
-            information_validity_decision = 'Reject'
-        elif 'visa' in entry_record:
-            if valid_date_format(visa_date) is False:
-                information_validity_decision = 'Reject'
-            elif valid_visa_code_format(visa_code) is False:
-                information_validity_decision = 'Reject'
-            else:
-                information_validity_decision = 'Accept'
-        else:
-            information_validity_decision = 'Accept'
-
-        #-- Check whether the current entry record is in the watchlist, then decide to accept or send to secondary
-        if is_in_watchlist(first_name, last_name, passport, watch_list):
-            watchlist_decision = 'Secondary'
-        else:
-            watchlist_decision = 'Accept'
-
-        # Check whether the current entry record is coming from or via country that has medical advisory
-        # then decide to accept or send to quarantine
-        if 'via' in entry_record:
-            check_medical_advisory = has_medical_advisory(via_country, country_list) or \
-                has_medical_advisory(from_country, country_list)
-        else:
-            check_medical_advisory = has_medical_advisory(from_country, country_list)
-
-        medical_advisory_decision = 'Quarantine' if check_medical_advisory else 'Accept'
-
-        # Check whether visa is required. If required, check whether entry record has correct visa information
-        if is_visa_required(home_country, entry_reason, country_list):
-            if 'visa' in entry_record:
-                if valid_date_format(visa_date) and valid_visa_code_format(visa_code) and check_visa_expiry(visa_date):
-                    visa_decision = 'Accept'
-                else:
-                    visa_decision = 'Reject'
-            else:
-                visa_decision = 'Reject'
-        else:
-            visa_decision = 'Accept'
-
-        if entry_reason.lower() == 'returning' and home_country.upper() == 'KAN':
-            return_entry_decision = 'Accept'
-        else:
-            return_entry_decision = 'N/A'
+        entry_decision_for_current_record = list()
 
         # Compile each decision, then make final decision by the order of priority
-        entry_decision_for_current_record.append(basic_info_availability_decision)
-        entry_decision_for_current_record.append(return_entry_decision)
-        entry_decision_for_current_record.append(watchlist_decision)
-        entry_decision_for_current_record.append(visa_decision)
-        entry_decision_for_current_record.append(medical_advisory_decision)
-        entry_decision_for_current_record.append(information_validity_decision)
+        entry_decision_for_current_record.append(basic_information_completeness_check(entry_record))
+        entry_decision_for_current_record.append(information_validity_decision_function(entry_record))
+        entry_decision_for_current_record.append(watchlist_decision_function(entry_record, watch_list))
+        entry_decision_for_current_record.append(quarantine_decision_function(entry_record, country_list))
+        entry_decision_for_current_record.append(visa_decision_function(entry_record, country_list))
+        entry_decision_for_current_record.append(return_entry_decision_function(entry_record))
 
-        print('info_complete_decision: ' + basic_info_availability_decision)
-        print('return_entry_decision: ' + return_entry_decision)
-        print('watchlist_decision: ' + watchlist_decision)
-        print('visa_decision: ' + visa_decision)
-        print('medical_advisory_decision: ' + medical_advisory_decision)
-        print('info_validity_decision: ' + information_validity_decision)
-        print(' ')
-
+        # Making final decision based on the order of priority
         if 'Quarantine' in entry_decision_for_current_record:
             entry_decision_list.append('Quarantine')
         elif 'Reject' in entry_decision_for_current_record:
@@ -136,6 +53,159 @@ def decide(input_file, watchlist_file, countries_file):
 
     return entry_decision_list
 
+
+def basic_information_completeness_check(entry_record):
+    """
+    Check whether all the field information is available.
+    :param entry_record: traveler's entry application
+    :return: String 'Accept' if all required field contains the information, 'Reject' otherwise
+    """
+    try:
+        # Basic Variables checks
+        first_name = valid_basic_info_availability(entry_record['first_name'])
+        last_name = valid_basic_info_availability(entry_record['last_name'])
+        birth_date = valid_basic_info_availability(entry_record['birth_date'])
+        passport = valid_basic_info_availability(entry_record['passport'])
+        home_city = valid_basic_info_availability(entry_record['home']['city'])
+        home_region = valid_basic_info_availability(entry_record['home']['region'])
+        home_country = valid_basic_info_availability(entry_record['home']['country'])
+        from_city = valid_basic_info_availability(entry_record['from']['city'])
+        from_region = valid_basic_info_availability(entry_record['from']['region'])
+        from_country = valid_basic_info_availability(entry_record['from']['country'])
+        entry_reason = valid_basic_info_availability(entry_record['entry_reason'])
+
+        # via variables checks
+        if 'via' in entry_record:
+            via_city = valid_basic_info_availability(entry_record['via']['city'])
+            via_region = valid_basic_info_availability(entry_record['via']['region'])
+            via_country = valid_basic_info_availability(entry_record['via']['country'])
+        # via variables checks
+        if 'visa' in entry_record:
+            visa_date = valid_basic_info_availability(entry_record['visa']['date'])
+            visa_code = valid_basic_info_availability(entry_record['visa']['code'])
+    except ValueError:
+        basic_info_availability_decision_final = 'Reject'
+    else:
+        basic_info_availability_decision_final = 'Accept'
+
+    return basic_info_availability_decision_final
+
+def return_entry_decision_function(entry_record):
+    """
+    make decision for returning traveller
+    :param entry_record: traveler's entry application
+    :return: String 'Accept' if the traveler is returning, 'No Decision' otherwise
+    """
+    if entry_record['entry_reason'].lower() == 'returning' and entry_record['home']['country'].upper() == 'KAN':
+        return_entry_decision_final = 'Accept'
+    else:
+        return_entry_decision_final = 'No Decision'
+
+    return return_entry_decision_final
+
+def visa_decision_function(entry_record, country_list_file):
+    """
+    Check whether visa is required. If required, check whether entry record has correct visa information
+    :param entry_record: traveler's entry application
+    :param country_list_file: parsed JSON list containing visa required country information
+    :return: String 'Accept' if the visa is not required or person has a valid visa. 'Reject' otherwise
+    """
+    home_country_temp = entry_record['home']['country']
+    entry_reason_temp = entry_record['entry_reason']
+
+    if home_country_temp == '':
+        can_assess = False
+    elif 'visa' in entry_record and (entry_record['visa']['date'] == '' or entry_record['visa']['code'] == ''):
+        can_assess = False
+    else:
+        can_assess = True
+
+    if can_assess:
+        if is_visa_required(home_country_temp, entry_reason_temp, country_list_file):
+            if 'visa' in entry_record:
+                if valid_date_format(entry_record['visa']['date']) and valid_visa_code_format(entry_record['visa']['code'])\
+                        and check_visa_expiry(entry_record['visa']['date']):
+                    visa_decision_final = 'Accept'
+                else:
+                    visa_decision_final = 'Reject'
+            else:
+                visa_decision_final = 'Reject'
+        else:
+            visa_decision_final = 'Accept'
+    else:
+        visa_decision_final = 'Reject'
+
+    return visa_decision_final
+
+def quarantine_decision_function(entry_record, country_list_file):
+    """
+    Check whether the current entry record is coming from or via country that has medical advisory
+    then decide to accept or send to quarantine
+    :param entry_record: traveler's entry application
+    :param country_list_file: parsed JSON list containing medical advisory country information
+    :return: String, 'Accept' if the traveler didn't come from or via the country with medical advisory.
+    'Reject' otherwise
+    """
+    from_country_temp = entry_record['from']['country']
+
+    if from_country_temp == '':
+        can_assess = False
+    elif 'via' in entry_record and entry_record['via']['country'] == '' and from_country_temp == '':
+        can_assess = False
+    else:
+        can_assess = True
+
+    if can_assess:
+        if 'via' in entry_record:
+            check_medical_advisory = has_medical_advisory(entry_record['via']['country'], country_list_file) or \
+                has_medical_advisory(from_country_temp, country_list_file)
+        else:
+            check_medical_advisory = has_medical_advisory(from_country_temp, country_list_file)
+
+        quarantine_decision_final = 'Quarantine' if check_medical_advisory else 'Accept'
+    else:
+        quarantine_decision_final = 'Reject'
+
+    return quarantine_decision_final
+
+
+def watchlist_decision_function(entry_record, watch_list_file):
+    """
+    Check whether the current entry record is in the watchlist, then decide to accept or send to secondary
+    :param entry_record: traveler's entry application
+    :param watch_list_file: parsed JSON list containing watchlist information
+    :return: String 'Accept' if the examined traveler is not in the watchlist file, 'Reject' otherwise
+    """
+    if is_in_watchlist(entry_record['first_name'], entry_record['last_name'],
+                       entry_record['passport'], watch_list_file):
+        watchlist_decision_final = 'Secondary'
+    else:
+        watchlist_decision_final = 'Accept'
+
+    return watchlist_decision_final
+
+
+def information_validity_decision_function(entry_record):
+    """
+    Check the input format validity for each date, passport and visa code if it exists
+    :param entry_record: traveler's entry application
+    :return: String 'Accept' if the format of each data is correct, Otherwise 'Reject'
+    """
+    if valid_passport_format(entry_record['passport']) is False:
+        information_validity_final = 'Reject'
+    elif valid_date_format(entry_record['birth_date']) is False:
+        information_validity_final = 'Reject'
+    elif 'visa' in entry_record:
+        if valid_date_format(entry_record['visa']['date']) is False:
+            information_validity_final = 'Reject'
+        elif valid_visa_code_format(entry_record['visa']['code']) is False:
+            information_validity_final = 'Reject'
+        else:
+            information_validity_final = 'Accept'
+    else:
+        information_validity_final = 'Accept'
+
+    return information_validity_final
 
 def valid_passport_format(passport_number):
     """
@@ -208,6 +278,7 @@ def has_medical_advisory(country_code, country_info_list):
     :param country_info_list: List that contains medical advisory information for each country
     :return: Boolean True if country is under medical advisory, False otherwise.
     """
+    print(country_code)
     medical_advisory = country_info_list[country_code]['medical_advisory']
     if len(medical_advisory) > 0:
         return True
