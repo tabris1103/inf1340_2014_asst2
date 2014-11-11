@@ -24,12 +24,12 @@ def decide(input_file, watchlist_file, countries_file):
 
     entry_decision_list = []
 
-    #Check the existence of the file
+    #Pasring JSON file to list
     entry_list = parse_json_to_python_list(input_file)
     watch_list = parse_json_to_python_list(watchlist_file)
     country_list = parse_json_to_python_list(countries_file)
 
-    # needs to have for loop to iterate the list
+    # To iterate the entry records in the traveler list
     for entry_record in entry_list:
         entry_decision_for_current_record = list()
 
@@ -61,34 +61,36 @@ def basic_information_completeness_check(entry_record):
     :return: String 'Accept' if all required field contains the information, 'Reject' otherwise
     """
     try:
-        # Basic Variables checks
-        first_name = valid_basic_info_availability(entry_record['first_name'])
-        last_name = valid_basic_info_availability(entry_record['last_name'])
-        birth_date = valid_basic_info_availability(entry_record['birth_date'])
-        passport = valid_basic_info_availability(entry_record['passport'])
-        home_city = valid_basic_info_availability(entry_record['home']['city'])
-        home_region = valid_basic_info_availability(entry_record['home']['region'])
-        home_country = valid_basic_info_availability(entry_record['home']['country'])
-        from_city = valid_basic_info_availability(entry_record['from']['city'])
-        from_region = valid_basic_info_availability(entry_record['from']['region'])
-        from_country = valid_basic_info_availability(entry_record['from']['country'])
-        entry_reason = valid_basic_info_availability(entry_record['entry_reason'])
+        # Basic Variables checks by calling each variable. Exception will be raised
+        # if the value does not exist for the inspected field
+        valid_basic_info_availability(entry_record['first_name'])
+        valid_basic_info_availability(entry_record['last_name'])
+        valid_basic_info_availability(entry_record['birth_date'])
+        valid_basic_info_availability(entry_record['passport'])
+        valid_basic_info_availability(entry_record['home']['city'])
+        valid_basic_info_availability(entry_record['home']['region'])
+        valid_basic_info_availability(entry_record['home']['country'])
+        valid_basic_info_availability(entry_record['from']['city'])
+        valid_basic_info_availability(entry_record['from']['region'])
+        valid_basic_info_availability(entry_record['from']['country'])
+        valid_basic_info_availability(entry_record['entry_reason'])
 
         # via variables checks
         if 'via' in entry_record:
-            via_city = valid_basic_info_availability(entry_record['via']['city'])
-            via_region = valid_basic_info_availability(entry_record['via']['region'])
-            via_country = valid_basic_info_availability(entry_record['via']['country'])
+            valid_basic_info_availability(entry_record['via']['city'])
+            valid_basic_info_availability(entry_record['via']['region'])
+            valid_basic_info_availability(entry_record['via']['country'])
         # via variables checks
         if 'visa' in entry_record:
-            visa_date = valid_basic_info_availability(entry_record['visa']['date'])
-            visa_code = valid_basic_info_availability(entry_record['visa']['code'])
+            valid_basic_info_availability(entry_record['visa']['date'])
+            valid_basic_info_availability(entry_record['visa']['code'])
     except ValueError:
         basic_info_availability_decision_final = 'Reject'
     else:
         basic_info_availability_decision_final = 'Accept'
 
     return basic_info_availability_decision_final
+
 
 def return_entry_decision_function(entry_record):
     """
@@ -102,6 +104,7 @@ def return_entry_decision_function(entry_record):
         return_entry_decision_final = 'No Decision'
 
     return return_entry_decision_final
+
 
 def visa_decision_function(entry_record, country_list_file):
     """
@@ -123,7 +126,8 @@ def visa_decision_function(entry_record, country_list_file):
     if can_assess:
         if is_visa_required(home_country_temp, entry_reason_temp, country_list_file):
             if 'visa' in entry_record:
-                if valid_date_format(entry_record['visa']['date']) and valid_visa_code_format(entry_record['visa']['code'])\
+                if valid_date_format(entry_record['visa']['date'])\
+                        and valid_visa_code_format(entry_record['visa']['code'])\
                         and check_visa_expiry(entry_record['visa']['date']):
                     visa_decision_final = 'Accept'
                 else:
@@ -136,6 +140,7 @@ def visa_decision_function(entry_record, country_list_file):
         visa_decision_final = 'Reject'
 
     return visa_decision_final
+
 
 def quarantine_decision_function(entry_record, country_list_file):
     """
@@ -207,6 +212,7 @@ def information_validity_decision_function(entry_record):
 
     return information_validity_final
 
+
 def valid_passport_format(passport_number):
     """
     Checks whether a passports number is five sets of five alpha-number characters separated by dashes
@@ -271,6 +277,7 @@ def check_visa_expiry(visa_date):
     else:
         return False
 
+
 def has_medical_advisory(country_code, country_info_list):
     """
     Check whether the given country (country code) has a medical advisory alert
@@ -286,7 +293,7 @@ def has_medical_advisory(country_code, country_info_list):
         return False
 
 
-def parse_json_to_python_list (json_file):
+def parse_json_to_python_list(json_file):
     """
     Parse JSON file to python list and return the parsed list.
     :param json_file: JSON file to be parsed
@@ -303,13 +310,14 @@ def parse_json_to_python_list (json_file):
 def valid_basic_info_availability(key_value):
     """
     Check whether the person has all the required basic information available.
-    :param entry_record: entry record to be checked for the basic information availability
-    :return:True if all the information exists, False otherwise.
+    :param key_value: Value to be checked
+    :return:Boolean, True if the value exists, False otherwise.
     """
     if key_value == "":
         raise ValueError("Field value is not complete!")
     else:
         return key_value
+
 
 def is_visa_required(country_code, required_visa_type, country_list):
     """
@@ -331,6 +339,7 @@ def is_visa_required(country_code, required_visa_type, country_list):
             return True
         else:
             return False
+
 
 def is_in_watchlist(first_name, last_name, passport_number, watchlist):
     """
