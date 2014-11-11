@@ -94,7 +94,7 @@ def basic_information_completeness_check(entry_record):
 
 def return_entry_decision_function(entry_record):
     """
-    make decision for returning traveller
+    Make decision for returning traveller
     :param entry_record: traveler's entry application
     :return: String 'Accept' if the traveler is returning, 'No Decision' otherwise
     """
@@ -116,6 +116,7 @@ def visa_decision_function(entry_record, country_list_file):
     home_country_temp = entry_record['home']['country']
     entry_reason_temp = entry_record['entry_reason']
 
+    # Check whether the visa information can be assessed or not
     if home_country_temp == '':
         can_assess = False
     elif 'visa' in entry_record and (entry_record['visa']['date'] == '' or entry_record['visa']['code'] == ''):
@@ -137,6 +138,7 @@ def visa_decision_function(entry_record, country_list_file):
         else:
             visa_decision_final = 'Accept'
     else:
+        # if visa information is not assessable, return 'Reject',
         visa_decision_final = 'Reject'
 
     return visa_decision_final
@@ -148,11 +150,12 @@ def quarantine_decision_function(entry_record, country_list_file):
     then decide to accept or send to quarantine
     :param entry_record: traveler's entry application
     :param country_list_file: parsed JSON list containing medical advisory country information
-    :return: String, 'Accept' if the traveler didn't come from or via the country with medical advisory.
-    'Reject' otherwise
+    :return: String, 'Quarantine' if the traveler came from or via the country with medical advisory.
+    'Accept' otherwise. 'Reject' only when the medical advisory information is not assessable
     """
     from_country_temp = entry_record['from']['country']
 
+    # Check whether the medical advisory information can be assessed or not
     if from_country_temp == '':
         can_assess = False
     elif 'via' in entry_record and entry_record['via']['country'] == '' and from_country_temp == '':
@@ -169,6 +172,7 @@ def quarantine_decision_function(entry_record, country_list_file):
 
         quarantine_decision_final = 'Quarantine' if check_medical_advisory else 'Accept'
     else:
+        # if medical advisory information is not assessable, return 'Reject',
         quarantine_decision_final = 'Reject'
 
     return quarantine_decision_final
